@@ -13,6 +13,7 @@ class SeeAll extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color(0xFF333333),
         title: (caseSee == 0)
             ? Center(child: Text('Ranking'))
             : (caseSee == 1)
