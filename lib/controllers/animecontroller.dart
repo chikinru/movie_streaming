@@ -122,4 +122,8 @@ class AnimeController extends GetxController {
     animeSeason.add(anime);
     animeNextSeason.add(await jikan.getSeasonLater());
   }
+
+  Future<void> getAllAnime() async {
+    var response = await http.get(Uri.parse('https://api.jikan.moe/v4/manga/'));
+  }
 }
