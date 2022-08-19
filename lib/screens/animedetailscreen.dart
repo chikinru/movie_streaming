@@ -9,6 +9,8 @@ import 'package:movie_streaming/components/categorycard.dart';
 import 'package:movie_streaming/controllers/animecontroller.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+import '../components/reviews.dart';
+
 class AnimeDetailScreen extends StatelessWidget {
   var isBookmark = false.obs;
   var _currentTab = 0.obs;
@@ -166,178 +168,180 @@ class AnimeDetailScreen extends StatelessWidget {
                       ),
                       // text field
                       Positioned(
-                        top: 70,
-                        child: Container(
-                          margin: EdgeInsets.only(left: 20),
-                          child: (_currentTab == 0)
-                              ? Container(
-                                  width: 390,
-                                  height: Get.height,
-                                  child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text('Overviews',
-                                            style: GoogleFonts.questrial(
-                                              fontSize: 12,
-                                              color: Colors.white,
-                                            )),
-                                        Text(
-                                            overflow: TextOverflow.ellipsis,
-                                            style: GoogleFonts.questrial(
-                                                fontSize: 14,
-                                                color: Colors.white),
-                                            maxLines: 5,
-                                            '${animeController.anime[0].synopsis}'),
-                                        SizedBox(height: 10),
-                                        // Release date and status
-                                        Container(
-                                          child: Column(children: [
-                                            Row(
-                                              children: [
-                                                Text('Release Date: ',
-                                                    style: style),
-                                                SizedBox(
-                                                  width: 140,
-                                                ),
-                                                Text(
-                                                  'Status: ',
-                                                  style: style,
-                                                )
-                                              ],
-                                            ),
-                                            SizedBox(height: 5),
-                                            Row(
-                                              children: [
-                                                Container(
-                                                  width: 90,
-                                                  height: 29,
-                                                  child: Text(
-                                                      overflow:
-                                                          TextOverflow.fade,
-                                                      '${animeController.anime[0].aired.from} ',
-                                                      style: style),
-                                                ),
-                                                SizedBox(
-                                                  width: 140,
-                                                ),
-                                                Text(
-                                                  '${animeController.anime[0].status}',
-                                                  style: style,
-                                                )
-                                              ],
-                                            ),
-                                          ]),
-                                        ),
-                                        SizedBox(height: 10),
-                                        // Rated by and Duration
-                                        Container(
-                                          child: Column(children: [
-                                            Row(
-                                              children: [
-                                                Container(
-                                                  width: 90,
-                                                  height: 29,
-                                                  child: Text(
-                                                      overflow:
-                                                          TextOverflow.fade,
-                                                      'Rated by: ',
-                                                      style: style),
-                                                ),
-                                                SizedBox(
-                                                  width: 140,
-                                                ),
-                                                Text(
-                                                  'Duration: ',
-                                                  style: style,
-                                                )
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Container(
-                                                  width: 90,
-                                                  height: 29,
-                                                  child: Text(
-                                                      overflow:
-                                                          TextOverflow.fade,
-                                                      '${animeController.anime[0].scoredBy} peoples ',
-                                                      style: style),
-                                                ),
-                                                SizedBox(
-                                                  width: 140,
-                                                ),
-                                                Text(
-                                                  '${animeController.anime[0].duration}',
-                                                  style: style,
-                                                )
-                                              ],
-                                            )
-                                          ]),
-                                        ),
-                                        // Episodes
-                                        SizedBox(height: 10),
-                                        Container(
-                                          child: Column(
+                          top: 70,
+                          child: Obx(
+                            () => Container(
+                              margin: EdgeInsets.only(left: 20),
+                              child: (_currentTab == 0)
+                                  ? Container(
+                                      width: 390,
+                                      height: Get.height,
+                                      child: (animeController.anime.length == 0)
+                                          ? Center(
+                                              child:
+                                                  CircularProgressIndicator())
+                                          : Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                Text(
-                                                  'Episode:',
-                                                  style: style,
-                                                ),
-                                                Text(
-                                                  '${animeController.anime[0].episodes} episodes',
-                                                  style: style,
-                                                ),
-                                              ]),
-                                        ),
+                                                  Text('Overviews',
+                                                      style:
+                                                          GoogleFonts.questrial(
+                                                        fontSize: 12,
+                                                        color: Colors.white,
+                                                      )),
+                                                  Text(
+                                                      overflow: TextOverflow
+                                                          .ellipsis,
+                                                      style:
+                                                          GoogleFonts.questrial(
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.white),
+                                                      maxLines: 5,
+                                                      '${animeController.anime[0].synopsis}'),
+                                                  SizedBox(height: 10),
+                                                  // Release date and status
+                                                  Container(
+                                                    child: Column(children: [
+                                                      Row(
+                                                        children: [
+                                                          Text('Release Date: ',
+                                                              style: style),
+                                                          SizedBox(
+                                                            width: 140,
+                                                          ),
+                                                          Text(
+                                                            'Status: ',
+                                                            style: style,
+                                                          )
+                                                        ],
+                                                      ),
+                                                      SizedBox(height: 5),
+                                                      Row(
+                                                        children: [
+                                                          Container(
+                                                            width: 90,
+                                                            height: 29,
+                                                            child: Text(
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .fade,
+                                                                '${animeController.anime[0].aired.from} ',
+                                                                style: style),
+                                                          ),
+                                                          SizedBox(
+                                                            width: 140,
+                                                          ),
+                                                          Text(
+                                                            '${animeController.anime[0].status}',
+                                                            style: style,
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ]),
+                                                  ),
+                                                  SizedBox(height: 10),
+                                                  // Rated by and Duration
+                                                  Container(
+                                                    child: Column(children: [
+                                                      Row(
+                                                        children: [
+                                                          Container(
+                                                            width: 90,
+                                                            height: 29,
+                                                            child: Text(
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .fade,
+                                                                'Rated by: ',
+                                                                style: style),
+                                                          ),
+                                                          SizedBox(
+                                                            width: 140,
+                                                          ),
+                                                          Text(
+                                                            'Duration: ',
+                                                            style: style,
+                                                          )
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          Container(
+                                                            width: 90,
+                                                            height: 29,
+                                                            child: Text(
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .fade,
+                                                                '${animeController.anime[0].scoredBy} peoples ',
+                                                                style: style),
+                                                          ),
+                                                          SizedBox(
+                                                            width: 140,
+                                                          ),
+                                                          Text(
+                                                            '${animeController.anime[0].duration}',
+                                                            style: style,
+                                                          )
+                                                        ],
+                                                      )
+                                                    ]),
+                                                  ),
+                                                  // Episodes
+                                                  SizedBox(height: 10),
+                                                  Container(
+                                                    child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            'Episode:',
+                                                            style: style,
+                                                          ),
+                                                          Text(
+                                                            '${animeController.anime[0].episodes} episodes',
+                                                            style: style,
+                                                          ),
+                                                        ]),
+                                                  ),
 
-                                        //Trailer videos
+                                                  //Trailer videos
 
-                                        Container(
-                                            child: (trailerUrl == 'null')
-                                                ? Text('No trailer available')
-                                                : Container(
-                                                    width: Get.width,
-                                                    height: 450,
-                                                    child: YoutubePlayer(
-                                                      controller:
-                                                          _youtubePlayerController,
-                                                      showVideoProgressIndicator:
-                                                          true,
-                                                      onReady: () {},
-                                                    )))
-                                      ]),
-                                )
-                              : (_currentTab == 1)
-                                  ? Container(
-                                      width: Get.width,
-                                      height: Get.height,
-                                      child: Column(
-                                        children: [
-                                          Expanded(
-                                            child: ListView.separated(
-                                              itemBuilder: (contex, index) {
-                                                return Text(
-                                                    '${animeController.animeReviews[index].content}');
-                                              },
-                                              separatorBuilder:
-                                                  ((context, index) {
-                                                return SizedBox(height: 10);
-                                              }),
-                                              itemCount: animeController
-                                                  .animeReviews.length,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                                  Container(
+                                                      child: (trailerUrl ==
+                                                              'null')
+                                                          ? Text(
+                                                              'No trailer available')
+                                                          : Container(
+                                                              width: Get.width,
+                                                              height: 450,
+                                                              child:
+                                                                  YoutubePlayer(
+                                                                controller:
+                                                                    _youtubePlayerController,
+                                                                showVideoProgressIndicator:
+                                                                    true,
+                                                                onReady: () {},
+                                                              )))
+                                                ]),
                                     )
-                                  : Column(
-                                      children: [],
-                                    ),
-                        ),
-                      )
+                                  : (_currentTab == 1)
+                                      ? Container(
+                                          width: Get.width,
+                                          height: Get.height,
+                                          child: Container(
+                                              child: Reviews(
+                                            animeId: animeController.animeID,
+                                          )),
+                                        )
+                                      : Column(
+                                          children: [],
+                                        ),
+                            ),
+                          ))
                     ],
                   ),
                 )

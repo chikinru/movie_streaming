@@ -15,6 +15,7 @@ import 'package:movie_streaming/controllers/animecontroller.dart';
 import '../components/bestanime.dart';
 import '../components/upcoming.dart';
 import 'animedetailscreen.dart';
+import 'searchscreen.dart';
 
 class HomeScreen extends StatelessWidget {
   var _currentCarousel = 0.obs;
@@ -25,61 +26,89 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AnimeController animeController = Get.find();
-
+    final pageController = PageController(initialPage: 0);
+    var current_nav = 0.obs;
     return DefaultTabController(
       length: 5,
       child: Scaffold(
-        extendBody: true,
-        bottomNavigationBar: Obx(() => FloatingNavbar(
-              onTap: (val) {
-                currentNav.value = val;
-                if (currentNav == 0) {
-                  if (Get.currentRoute == HomeScreen()) {
-                  } else {
-                    Get.to(HomeScreen());
+          extendBody: true,
+          bottomNavigationBar: Obx(() => FloatingNavbar(
+                onTap: (val) {
+                  currentNav.value = val;
+                  if (currentNav == 0) {
+                    if (Get.currentRoute == HomeScreen()) {
+                      print('already in home screen');
+                    } else {
+                      pageController.jumpToPage(0);
+                    }
+                  } else if (currentNav == 1) {
+                    if (Get.currentRoute == SearchScreen()) {
+                      print('already in search screen');
+                    } else {
+                      pageController.jumpToPage(1);
+                    }
+                  } else if (currentNav == 2) {
+                    pageController.jumpToPage(2);
+                  } else if (currentNav == 3) {
+                    pageController.jumpToPage(3);
                   }
-                } else if (currentNav == 1) {}
-              },
-              items: [
-                FloatingNavbarItem(
-                  title: 'Home',
-                  icon: Icons.home,
+                },
+                items: [
+                  FloatingNavbarItem(
+                    title: 'Home',
+                    icon: Icons.home,
+                  ),
+                  FloatingNavbarItem(
+                    title: 'Search',
+                    icon: Icons.search,
+                  ),
+                  FloatingNavbarItem(
+                    title: 'Watchlist',
+                    icon: Icons.tv_rounded,
+                  ),
+                  FloatingNavbarItem(
+                    title: 'Profile',
+                    icon: Icons.people,
+                  )
+                ],
+                currentIndex: currentNav.value,
+              )),
+          body: PageView(
+            controller: pageController,
+            onPageChanged: (value) {
+              currentNav.value = value;
+            },
+            children: [
+              Container(
+                height: Get.height,
+                decoration: BoxDecoration(color: Color(0xFF333333)),
+                child: SingleChildScrollView(
+                  physics: ScrollPhysics(parent: BouncingScrollPhysics()),
+                  child: Column(children: [
+                    // top section, featured movies, add to watchlist, movie details
+                    Featured(),
+                    // list view sections
+                    SizedBox(height: 40),
+                    BestAnimes(),
+                    SizedBox(height: 40),
+                    ThisSeasonAnime(),
+                    SizedBox(height: 40),
+                    UpComing(),
+                    SizedBox(height: 80),
+                  ]),
                 ),
-                FloatingNavbarItem(
-                  title: 'Search',
-                  icon: Icons.search,
-                ),
-                FloatingNavbarItem(
-                  title: 'Watchlist',
-                  icon: Icons.tv_rounded,
-                ),
-                FloatingNavbarItem(
-                  title: 'Profile',
-                  icon: Icons.people,
-                )
-              ],
-              currentIndex: currentNav.value,
-            )),
-        body: Container(
-          height: Get.height,
-          decoration: BoxDecoration(color: Color(0xFF333333)),
-          child: SingleChildScrollView(
-            physics: ScrollPhysics(parent: BouncingScrollPhysics()),
-            child: Column(children: [
-              // top section, featured movies, add to watchlist, movie details
-              Featured(),
-              // list view sections
-              SizedBox(height: 40),
-              BestAnimes(),
-              SizedBox(height: 40),
-              ThisSeasonAnime(),
-              SizedBox(height: 40),
-              UpComing(),
-              SizedBox(height: 80),
-            ]),
-          ),
-        ),
-      ),
+              ),
+              Container(
+                child: SearchScreen(),
+              ),
+              Container(
+                child: Text('Watchlist'),
+              ),
+              Container(
+                child: Text('Profile'),
+              ),
+            ],
+          )),
     );
   }
 }
