@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:jikan_api/jikan_api.dart';
-import 'package:movie_streaming/models/TopAnime.dart';
+
+import '../models/AnimeSearch.dart';
 
 class AnimeController extends GetxController {
   var topAnime = <Top>[].obs;
@@ -18,6 +19,7 @@ class AnimeController extends GetxController {
   var anime = <Anime>[].obs;
   var animeID = 0.obs;
   var animeGerne = <GenericInfo>[].obs;
+  List<Data> animeList = [];
 
   var isLoading = true.obs;
   var genre = 0.obs;
@@ -123,7 +125,34 @@ class AnimeController extends GetxController {
     animeNextSeason.add(await jikan.getSeasonLater());
   }
 
-  Future<void> getAllAnime() async {
-    var response = await http.get(Uri.parse('https://api.jikan.moe/v4/manga/'));
+  Future<void> getAllAnime(String animeName) async {
+    var response = await http
+        .get(Uri.parse('https://api.jikan.moe/v4/anime?q=${animeName}'));
+    var data = jsonDecode(response.body);
+    //json to model AnimeSearch
+    var animeSearch = AnimeSearch.fromJson(data);
+    // store searched anime in anime list
+    if (animeSearch.pagination!.last_visible_page > 1) {
+      for (int i = 0; i <= animeSearch.pagination!.last_visible_page; i++) {
+        var response = await http.get(Uri.parse(
+            'https://api.jikan.moe/v4/anime?q=${animeName}&page=${i}'));
+        var data = jsonDecode(response.body);
+        //json to model AnimeSearch
+        var animeSearch = AnimeSearch.fromJson(data);
+        for (int j = 0; j < animeSearch.data!.length; j++) {
+          animeList.add(Data(
+              malId: animeSearch.data![j].malId,
+              title: animeSearch.data![j].title,
+              episodes: animeSearch.data![j].episodes,
+              type: animeSearch.data![j].type,
+              duration: animeSearch.data![j].duration,
+              season: animeSearch.data![j].season,
+              year: animeSearch.data![j].year,
+              image: animeSearch.data![j].image));
+        }
+      }
+    } else {
+      animeList.addAll(animeSearch.data!.toList());
+    }
   }
 }
