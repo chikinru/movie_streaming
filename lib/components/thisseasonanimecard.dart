@@ -25,12 +25,14 @@ class ThisSeasonAnimeCard extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () async {
+                      animeController.anime.clear();
+                      animeController.animeChar.clear();
                       animeController.animeID.value = animeController
                           .animeSeason.value[0].anime[index].malId;
                       await animeController
                           .getAninme(animeController.animeID)
                           .then((value) {
-                        Get.to(AnimeDetailScreen());
+                        Get.to(() => AnimeDetailScreen());
                       });
                     },
                     child: Container(

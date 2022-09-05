@@ -17,8 +17,8 @@ class Images {
 
 class Webp {
   String image_url;
-  String small_image_url;
-  String large_image_url;
+  String? small_image_url;
+  String? large_image_url;
 
   Webp(
       {required this.image_url,
@@ -40,8 +40,8 @@ class Webp {
 
 class Jpg {
   String image_url;
-  String small_image_url;
-  String large_image_url;
+  String? small_image_url;
+  String? large_image_url;
 
   Jpg(
       {required this.image_url,

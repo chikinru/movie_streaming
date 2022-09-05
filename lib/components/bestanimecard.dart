@@ -23,6 +23,8 @@ class BestAnimesCard extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () async {
+                      animeController.animeChar.clear();
+                      animeController.anime.clear();
                       animeController.animeID.value =
                           animeController.topAnime[index].malId;
                       await animeController

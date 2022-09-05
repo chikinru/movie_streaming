@@ -67,6 +67,8 @@ class SearchScreen extends StatelessWidget {
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: () async {
+                                  animeController.anime.clear();
+                                  animeController.animeChar.clear();
                                   animeController.animeID.value =
                                       animeController.animeList[index].malId!;
                                   await animeController

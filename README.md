@@ -13,5 +13,6 @@ My first app ever, using jikan api
 [❌] WatchList
 [❌] Reviews (jikan api has no data)
 [❌] Streaming services
+[❌] Folder achitecture
 
 

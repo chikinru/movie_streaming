@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:jikan_api/jikan_api.dart';
+import 'package:movie_streaming/models/Character.dart';
 
 import '../models/AnimeSearch.dart';
 
@@ -17,6 +18,7 @@ class AnimeController extends GetxController {
   var animeNextSeason = <Season>[].obs;
 
   var anime = <Anime>[].obs;
+  var animeChar = <CharData>[].obs;
   var animeID = 0.obs;
   var animeGerne = <GenericInfo>[].obs;
   List<Data> animeList = [];
@@ -154,5 +156,13 @@ class AnimeController extends GetxController {
     } else {
       animeList.addAll(animeSearch.data!.toList());
     }
+  }
+
+  Future<void> getAnimeCharacter(var animeID) async {
+    var response = await http
+        .get(Uri.parse('https://api.jikan.moe/v4/anime/${animeID}/characters'));
+    var data = jsonDecode(response.body);
+    var animeCharacter = CharacterModel.fromJson(data);
+    animeChar.addAll(animeCharacter.data!.toList());
   }
 }

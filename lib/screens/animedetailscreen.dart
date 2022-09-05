@@ -57,7 +57,6 @@ class AnimeDetailScreen extends StatelessWidget {
           leading: InkWell(
             onTap: () {
               Get.back();
-              animeController.anime.clear();
             },
             child: Icon(Icons.arrow_back_ios),
           ),
@@ -338,7 +337,81 @@ class AnimeDetailScreen extends StatelessWidget {
                                           )),
                                         )
                                       : Column(
-                                          children: [],
+                                          children: [
+                                            Container(
+                                                width: Get.width,
+                                                height: Get.height,
+                                                child: FutureBuilder(
+                                                  builder:
+                                                      (BuildContext context,
+                                                          AsyncSnapshot<dynamic>
+                                                              snapshot) {
+                                                    if (snapshot
+                                                            .connectionState ==
+                                                        ConnectionState.done) {
+                                                      return ListView.separated(
+                                                        scrollDirection:
+                                                            Axis.horizontal,
+                                                        itemBuilder:
+                                                            (context, index) {
+                                                          return Container(
+                                                              child: Column(
+                                                            children: [
+                                                              Container(
+                                                                width: 50,
+                                                                height: 50,
+                                                                decoration: BoxDecoration(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            50),
+                                                                    image: DecorationImage(
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                        image: NetworkImage(
+                                                                            "${animeController.animeChar[index].character!.images.jpg.image_url}"))),
+                                                              ),
+                                                              SizedBox(
+                                                                height: 5,
+                                                              ),
+                                                              Text(
+                                                                  animeController
+                                                                      .animeChar[
+                                                                          index]
+                                                                      .character!
+                                                                      .name,
+                                                                  style: GoogleFonts.questrial(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          15))
+                                                            ],
+                                                          ));
+                                                        },
+                                                        itemCount:
+                                                            animeController
+                                                                .animeChar
+                                                                .length,
+                                                        separatorBuilder:
+                                                            (BuildContext
+                                                                    context,
+                                                                int index) {
+                                                          return SizedBox(
+                                                            width: 20,
+                                                          );
+                                                        },
+                                                      );
+                                                    } else {
+                                                      return Center(
+                                                          child:
+                                                              CircularProgressIndicator());
+                                                    }
+                                                  },
+                                                  future: animeController
+                                                      .getAnimeCharacter(
+                                                          animeController
+                                                              .anime[0].malId),
+                                                ))
+                                          ],
                                         ),
                             ),
                           ))

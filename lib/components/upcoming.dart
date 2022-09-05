@@ -45,7 +45,9 @@ class UpComing extends StatelessWidget {
             ),
             // UpComingCard(),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                animeController.getAnimeCharacter(123);
+              },
               child: Text('UpComingCard'),
             ),
           ],

@@ -230,6 +230,8 @@ class Featured extends StatelessWidget {
                           primary: Color(0xFFF2C94C),
                         ),
                         onPressed: () async {
+                          animeController.animeChar.clear();
+                          animeController.anime.clear();
                           animeController.animeID.value = _malID.value;
                           await animeController
                               .getAninme(animeController.animeID)
