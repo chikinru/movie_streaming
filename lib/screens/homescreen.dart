@@ -11,6 +11,7 @@ import 'package:jikan_api/jikan_api.dart';
 import 'package:movie_streaming/components/featured.dart';
 import 'package:movie_streaming/components/thisseason.dart';
 import 'package:movie_streaming/controllers/animecontroller.dart';
+import 'package:movie_streaming/screens/watchlist.dart';
 
 import '../components/bestanime.dart';
 import '../components/upcoming.dart';
@@ -48,7 +49,11 @@ class HomeScreen extends StatelessWidget {
                       pageController.jumpToPage(1);
                     }
                   } else if (currentNav == 2) {
-                    pageController.jumpToPage(2);
+                    if (Get.currentRoute == WatchList()) {
+                      print('already in watchlist ');
+                    } else {
+                      pageController.jumpToPage(2);
+                    }
                   } else if (currentNav == 3) {
                     pageController.jumpToPage(3);
                   }
@@ -102,7 +107,7 @@ class HomeScreen extends StatelessWidget {
                 child: SearchScreen(),
               ),
               Container(
-                child: Text('Watchlist'),
+                child: WatchList(),
               ),
               Container(
                 child: Text('Profile'),

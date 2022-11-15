@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movie_streaming/local_files/file_manager.dart';
 
 import '../controllers/animecontroller.dart';
 import 'seeall.dart';
@@ -46,7 +47,8 @@ class UpComing extends StatelessWidget {
             // UpComingCard(),
             ElevatedButton(
               onPressed: () {
-                animeController.getAnimeCharacter(123);
+                FileManager fileManager = new FileManager();
+                fileManager.readData();
               },
               child: Text('UpComingCard'),
             ),

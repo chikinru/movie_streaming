@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:jikan_api/jikan_api.dart';
 import 'package:movie_streaming/components/categorycard.dart';
 import 'package:movie_streaming/controllers/animecontroller.dart';
+import 'package:movie_streaming/local_files/file_manager.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../components/reviews.dart';
@@ -36,6 +37,8 @@ class AnimeDetailScreen extends StatelessWidget {
                   onTap: () {
                     isBookmark.value = !isBookmark.value;
                     if (isBookmark == true) {
+                      FileManager fileManager = new FileManager();
+                      fileManager.writeData(animeController.anime[0].malId);
                       Get.showSnackbar(GetSnackBar(
                         duration: Duration(seconds: 1),
                         message: "Added to bookmark",

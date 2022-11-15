@@ -16,6 +16,7 @@ class AnimeController extends GetxController {
   var animeReviews = <Review>[].obs;
   var animeSeason = <Season>[].obs;
   var animeNextSeason = <Season>[].obs;
+  var watchList = <Anime>[].obs;
 
   var anime = <Anime>[].obs;
   var animeChar = <CharData>[].obs;
@@ -165,4 +166,12 @@ class AnimeController extends GetxController {
     var animeCharacter = CharacterModel.fromJson(data);
     animeChar.addAll(animeCharacter.data!.toList());
   }
+
+  Future<void> animeToWatchList(var animeID) async {
+    Jikan jikan = Jikan();
+    var animeItem = await jikan.getAnimeInfo(animeID);
+    watchList.add(animeItem);
+  }
+
+  removeFromWatchList(var animeID) {}
 }

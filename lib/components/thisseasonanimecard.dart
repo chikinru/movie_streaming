@@ -32,7 +32,7 @@ class ThisSeasonAnimeCard extends StatelessWidget {
                       await animeController
                           .getAninme(animeController.animeID)
                           .then((value) {
-                        Get.to(() => AnimeDetailScreen());
+                        Get.to(() =>AnimeDetailScreen());
                       });
                     },
                     child: Container(
